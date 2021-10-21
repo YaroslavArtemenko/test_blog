@@ -73,14 +73,28 @@
 </template>
 
 <script>
+import {mapActions} from "vuex";
+import {DELETE_ARTICLE} from "../store";
+
 export default {
   name: "Article",
   data: () => ({
     reveal: false,
     loading: false
   }),
+  methods: {
+    remove() {
+      this.loading = true
+      this.$store.commit(DELETE_ARTICLE, this.item);
+      this.loading = false
+    },
+  },
   props: ['item'],
-
+  ...mapActions([
+    // `mapActions` also supports payloads:
+    'setArticle', // map `this.incrementBy(amount)` to `this.$store.dispatch('incrementBy', amount)`
+    'deleteArticle'
+  ]),
 }
 </script>
 

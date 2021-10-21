@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-data-iterator
-        :items="items"
+        :items="this.articles"
         :items-per-page.sync="itemsPerPage"
         :page.sync="page"
         :search="search"
@@ -61,10 +61,10 @@
         </v-toolbar>
       </template>
 
-      <template v-slot:default="props">
+      <template>
         <v-row>
           <v-col
-              v-for="item in props.items"
+              v-for="item in this.articles"
               :key="item.name"
               cols="12"
               sm="6"
@@ -166,6 +166,8 @@
 
 <script>
 import Article from "./Article";
+import {mapActions, mapGetters} from "vuex";
+import {ARTICLES} from "../store";
 
 export default {
   name: "Search",
@@ -187,74 +189,18 @@ export default {
         'Author',
         'Date'
       ],
-      items: [
-        {
-          category: 'Sport',
-          name: 'Football',
-          previewText: 'Ole Gunnar Solskjaer\'s praise for Cristiano Ronaldo: \'That\'s what he does best\'',
-          author: 'Yaroslav Artemenko',
-          date: '21.10.2021',
-          mainText: 'Solskjaer on Ronaldo: "I was really, really pleased with how he led the line. As a centre forward we asked him to run the channels, drop in, press more because we\'re at home, of course. We want to get the crowd behind us. He did everything a centre forward should be doing"'
-        },
-        {
-          category: 'Meal',
-          name: 'Ice cream sandwich',
-          previewText: '          calories: 237,\n' +
-              '          fat: 9.0,\n' +
-              '          carbs: 37,\n' +
-              '          protein: 4.3,\n' +
-              '          sodium: 129',
-          author: 'Nile Jensen',
-          date: '21.10.2021',
-          mainText: 'Ice cream sandwiches are as much a part of summer as rain is to spring and bicycles to childhood.\n' +
-              '\n' +
-              'These classic hot-weather treats remind me of drinking from the hose, piles of bikes discarded in front yards, sitting on the front porch, and licking the sticky, sweet chocolate cake from my fingertips, while creamy vanilla ice cream melts down my wrist.'
-        },
-        {
-          category: 'Sport',
-          name: 'Football',
-          previewText: 'BIG DEAL Get £20 risk-free bet on Vitesse vs Tottenham Europa Conference League clash, plus 89/1 Paddy Power prediction special',
-          author: 'Hadassah Philip',
-          date: '21.10.2021',
-          mainText: 'TOTTENHAM take on Vitesse Arnhem in their Europa Conference League group clash on Thursday.\n' +
-              '\n' +
-              'And Paddy Power are offering brand new customers a completely risk free £20 bet on the action PLUS a massive 89/1 bet builder special.'
-        },
-        {
-          category: 'Meal',
-          name: 'Cupcake',
-          previewText: ' Calories: 305,\n' +
-              '          Fat: 3.7,\n' +
-              '          Carbs: 67,\n' +
-              '          Protein: 4.3,\n' +
-              '          Sodium: 413',
-          author: 'Christie Brett',
-          date: '21.10.2021',
-          mainText: 'Bake these easy vanilla cupcakes in just 35 minutes. Perfect for birthdays, picnics or whenever you fancy a sweet treat, they\'re sure to be a crowd-pleaser'
-
-        },
-        {
-          category: 'Meal',
-          name: 'Gingerbread',
-          previewText: ' calories: 356,\n' +
-              '          fat: 16.0,\n' +
-              '          carbs: 49,\n' +
-              '          protein: 3.9,\n' +
-              '          sodium: 327',
-          author: 'Nathanial Guy',
-          date: '21.10.2021',
-          mainText: 'Here is my favorite gingerbread cookies recipe and one of the most popular Christmas cookie recipes on this website. Soft in the centers, crisp on the edges, perfectly spiced, molasses and brown sugar-sweetened holiday goodness. '
-        },
-      ],
     }
   },
   computed: {
     numberOfPages() {
-      return Math.ceil(this.items.length / this.itemsPerPage)
+      return Math.ceil(this.articles.length / this.itemsPerPage)
     },
     filteredKeys() {
       return this.keys.filter(key => key !== 'Name')
     },
+    ...mapGetters([
+      ARTICLES
+    ]),
   },
   methods: {
     nextPage() {
@@ -266,6 +212,16 @@ export default {
     updateItemsPerPage(number) {
       this.itemsPerPage = number
     },
+
+    ...mapActions([
+      // `mapActions` also supports payloads:
+      'setArticles', // map `this.incrementBy(amount)` to `this.$store.dispatch('incrementBy', amount)`
+      'setArticle', // map `this.incrementBy(amount)` to `this.$store.dispatch('incrementBy', amount)`
+      'createArticle', // map `this.incrementBy(amount)` to `this.$store.dispatch('incrementBy', amount)`
+      'updateArticle', // map `this.incrementBy(amount)` to `this.$store.dispatch('incrementBy', amount)`
+      'deleteArticle'
+    ]),
+
   },
 }
 </script>
