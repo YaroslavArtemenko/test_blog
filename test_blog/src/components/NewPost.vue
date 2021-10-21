@@ -23,7 +23,7 @@
     <v-text-field
         v-model="name"
         :error-messages="nameErrors"
-        :counter="10"
+        :counter="15"
         label="Name"
         required
         @input="$v.name.$touch()"
@@ -33,7 +33,7 @@
     <v-text-field
         v-model="title"
         :error-messages="titleErrors"
-        :counter="10"
+        :counter="15"
         label="Title"
         required
         @input="$v.title.$touch()"
@@ -41,23 +41,23 @@
     ></v-text-field>
 
     <v-text-field
-        v-model="name"
-        :error-messages="nameErrors"
-        :counter="10"
+        v-model="preview"
+        :error-messages="previewErrors"
+        :counter="300"
         label="Preview"
         required
-        @input="$v.name.$touch()"
-        @blur="$v.name.$touch()"
+        @input="$v.preview.$touch()"
+        @blur="$v.preview.$touch()"
     ></v-text-field>
 
     <v-text-field
-        v-model="name"
-        :error-messages="nameErrors"
-        :counter="10"
+        v-model="mainText"
+        :error-messages="mainTextErrors"
+        :counter="1000"
         label="Main Text"
         required
-        @input="$v.name.$touch()"
-        @blur="$v.name.$touch()"
+        @input="$v.mainText.$touch()"
+        @blur="$v.mainText.$touch()"
     ></v-text-field>
 
     <v-checkbox
@@ -83,16 +83,17 @@
 
 <script>
 import { validationMixin } from 'vuelidate'
-import { required, minLength, email } from 'vuelidate/lib/validators'
+import { required, minLength, maxLength } from 'vuelidate/lib/validators'
 
 export default {
   name: "NewPost",
   mixins: [validationMixin],
 
   validations: {
-    name: { required, minLength: minLength(5) },
-    title: {required, minLength: minLength(3)},
-    email: { required, email },
+    name: { required, minLength: minLength(3), maxLength: maxLength(15) },
+    title: {required, minLength: minLength(3),  maxLength: maxLength(15)},
+    preview: {required, minLength:minLength(10), maxLength: maxLength(300)},
+    mainText: {required, minLength:minLength(10), maxLength:maxLength(1000)},
     select: { required },
     checkbox: {
       checked (val) {
@@ -103,8 +104,9 @@ export default {
 
   data: () => ({
     name: '',
-    email: '',
     title: '',
+    preview: '',
+    mainText: '',
     select: null,
       // items: [
       //   'Item 1',
@@ -132,22 +134,33 @@ export default {
     nameErrors () {
       const errors = []
       if (!this.$v.name.$dirty) return errors
-      !this.$v.name.minLength && errors.push('Name must be at most 5 characters long')
+      !this.$v.name.minLength && errors.push('Name must be at least 3 characters')
+      !this.$v.name.maxLength && errors.push('Name must be at most 15 characters long')
       !this.$v.name.required && errors.push('Name is required.')
       return errors
     },
     titleErrors () {
       const errors = []
       if (!this.$v.title.$dirty) return errors
-      !this.$v.title.minLength && errors.push('Title must be at most 3 characters long')
+      !this.$v.title.minLength && errors.push('Title must be at least 3 characters')
+      !this.$v.title.maxLength && errors.push('Title must be at most 15 characters long')
       !this.$v.title.required && errors.push('Title is required.')
       return errors
     },
-    emailErrors () {
+    previewErrors () {
       const errors = []
-      if (!this.$v.email.$dirty) return errors
-      !this.$v.email.email && errors.push('Must be valid e-mail')
-      !this.$v.email.required && errors.push('E-mail is required')
+      if (!this.$v.preview.$dirty) return errors
+      !this.$v.preview.minLength && errors.push('Preview must be at least 10 characters')
+      !this.$v.preview.maxLength && errors.push('Preview must be at most 300 characters long')
+      !this.$v.preview.required && errors.push('Preview is required')
+      return errors
+    },
+    mainTextErrors () {
+      const errors = []
+      if (!this.$v.preview.$dirty) return errors
+      !this.$v.mainText.minLength && errors.push('Main text must be at least 10 characters')
+      !this.$v.mainText.maxLength && errors.push('Main text must be at most 1000 characters long')
+      !this.$v.mainText.required && errors.push('Text is required')
       return errors
     },
   },
@@ -160,7 +173,8 @@ export default {
       this.$v.$reset()
       this.name = ''
       this.title = ''
-      this.email = ''
+      this.preview = ''
+      this.mainText = ''
       this.select = null
       this.checkbox = false
     },
