@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <form style="margin-top: 15px">
 
     <v-card color="basil">
       <v-card-title class="text-center justify-center py-6">
@@ -19,6 +19,7 @@
         @change="$v.select.$touch()"
         @blur="$v.select.$touch()"
     ></v-select>
+
     <v-text-field
         v-model="name"
         :error-messages="nameErrors"
@@ -28,6 +29,17 @@
         @input="$v.name.$touch()"
         @blur="$v.name.$touch()"
     ></v-text-field>
+
+    <v-text-field
+        v-model="title"
+        :error-messages="titleErrors"
+        :counter="10"
+        label="Title"
+        required
+        @input="$v.title.$touch()"
+        @blur="$v.title.$touch()"
+    ></v-text-field>
+
     <v-text-field
         v-model="name"
         :error-messages="nameErrors"
@@ -37,6 +49,7 @@
         @input="$v.name.$touch()"
         @blur="$v.name.$touch()"
     ></v-text-field>
+
     <v-text-field
         v-model="name"
         :error-messages="nameErrors"
@@ -77,7 +90,8 @@ export default {
   mixins: [validationMixin],
 
   validations: {
-    name: { required, minLength: minLength(4) },
+    name: { required, minLength: minLength(5) },
+    title: {required, minLength: minLength(3)},
     email: { required, email },
     select: { required },
     checkbox: {
@@ -90,6 +104,7 @@ export default {
   data: () => ({
     name: '',
     email: '',
+    title: '',
     select: null,
       // items: [
       //   'Item 1',
@@ -117,8 +132,15 @@ export default {
     nameErrors () {
       const errors = []
       if (!this.$v.name.$dirty) return errors
-      !this.$v.name.maxLength && errors.push('Name must be at most 10 characters long')
+      !this.$v.name.minLength && errors.push('Name must be at most 5 characters long')
       !this.$v.name.required && errors.push('Name is required.')
+      return errors
+    },
+    titleErrors () {
+      const errors = []
+      if (!this.$v.title.$dirty) return errors
+      !this.$v.title.minLength && errors.push('Title must be at most 3 characters long')
+      !this.$v.title.required && errors.push('Title is required.')
       return errors
     },
     emailErrors () {
@@ -137,6 +159,7 @@ export default {
     clear () {
       this.$v.$reset()
       this.name = ''
+      this.title = ''
       this.email = ''
       this.select = null
       this.checkbox = false
