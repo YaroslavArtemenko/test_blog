@@ -4,6 +4,18 @@
       max-width="344"
   >
     <v-card-text>
+      <v-btn
+          class="mx-2"
+          fab
+          dark
+          small
+          color="cyan"
+          style="left:80%"
+      >
+        <v-icon dark>
+          mdi-pencil
+        </v-icon>
+      </v-btn>
       <div>{{ item.category }}</div>
       <p class="text-h4 text--primary">
         {{ item.name }}
@@ -22,6 +34,15 @@
       >
         More
       </v-btn>
+      <v-btn
+          :loading="loading"
+          class="ma-1"
+          color="error"
+          plain
+          @click="remove"
+      >
+        Delete
+      </v-btn>
     </v-card-actions>
 
     <v-expand-transition>
@@ -32,7 +53,7 @@
       >
         <v-card-text class="pb-0">
           <p class="text-h4 text--primary">
-            Origin
+            Information
           </p>
           <p>{{ item.mainText }}</p>
         </v-card-text>
@@ -67,4 +88,6 @@ export default {
   position: absolute;
   width: 100%;
 }
+
+
 </style>

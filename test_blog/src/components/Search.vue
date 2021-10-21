@@ -211,14 +211,11 @@ export default {
         },
         {
           category: 'Sport',
-          name: 'Eclair',
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-          sodium: 337,
-          calcium: '6%',
-          iron: '7%',
+          name: 'Football',
+          previewText: 'BIG DEAL Get £20 risk-free bet on Vitesse vs Tottenham Europa Conference League clash, plus 89/1 Paddy Power prediction special',
+          mainText: 'TOTTENHAM take on Vitesse Arnhem in their Europa Conference League group clash on Thursday.\n' +
+              '\n' +
+              'And Paddy Power are offering brand new customers a completely risk free £20 bet on the action PLUS a massive 89/1 bet builder special.'
         },
         {
           category: 'Meal',
