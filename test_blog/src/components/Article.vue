@@ -20,6 +20,7 @@
       <p class="text-h4 text--primary">
         {{ item.name }}
       </p>
+      <p>{{ item.author }} {{ item.date }}</p>
       <p>Preview</p>
       <div class="text--primary">
         {{ item.previewText }}
