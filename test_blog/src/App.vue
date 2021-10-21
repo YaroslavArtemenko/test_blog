@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main>
-      <HelloWorld/>
+      <Header/>
       <Search></Search>
 
     </v-main>
@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import Header from './components/Header';
 import Search from "./components/Search";
 
 
@@ -19,7 +19,7 @@ export default {
   name: 'App',
 
   components: {
-    HelloWorld,
+    Header,
     Search
   },
 
