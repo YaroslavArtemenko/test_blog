@@ -3,7 +3,7 @@
     <v-main>
       <Header/>
       <Search></Search>
-
+      <NewPost></NewPost>
     </v-main>
   </v-app>
 </template>
@@ -11,8 +11,7 @@
 <script>
 import Header from './components/Header';
 import Search from "./components/Search";
-
-
+import NewPost from "./components/NewPost";
 
 
 export default {
@@ -20,7 +19,8 @@ export default {
 
   components: {
     Header,
-    Search
+    Search,
+    NewPost
   },
 
   data: () => ({

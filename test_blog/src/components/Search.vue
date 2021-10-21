@@ -71,31 +71,31 @@
               md="4"
               lg="3"
           >
-<!--            <v-card>-->
-<!--              <v-card-title class="subheading font-weight-bold">-->
-<!--                {{ item.name }}-->
-<!--              </v-card-title>-->
+            <!--            <v-card>-->
+            <!--              <v-card-title class="subheading font-weight-bold">-->
+            <!--                {{ item.name }}-->
+            <!--              </v-card-title>-->
 
-<!--              <v-divider></v-divider>-->
+            <!--              <v-divider></v-divider>-->
 
-<!--              <v-list dense>-->
-<!--                <v-list-item-->
-<!--                    v-for="(key, index) in filteredKeys"-->
-<!--                    :key="index"-->
-<!--                >-->
-<!--                  <v-list-item-content :class="{ 'blue&#45;&#45;text': sortBy === key }">-->
-<!--                    {{ key }}:-->
-<!--                  </v-list-item-content>-->
-<!--                  <v-list-item-content-->
-<!--                      class="align-end"-->
-<!--                      :class="{ 'blue&#45;&#45;text': sortBy === key }"-->
-<!--                  >-->
-<!--                    {{ item[key.toLowerCase()] }}-->
-<!--                  </v-list-item-content>-->
-<!--                </v-list-item>-->
-<!--              </v-list>-->
-<!--            </v-card>-->
-            <Article v-bind:item = "item"></Article>
+            <!--              <v-list dense>-->
+            <!--                <v-list-item-->
+            <!--                    v-for="(key, index) in filteredKeys"-->
+            <!--                    :key="index"-->
+            <!--                >-->
+            <!--                  <v-list-item-content :class="{ 'blue&#45;&#45;text': sortBy === key }">-->
+            <!--                    {{ key }}:-->
+            <!--                  </v-list-item-content>-->
+            <!--                  <v-list-item-content-->
+            <!--                      class="align-end"-->
+            <!--                      :class="{ 'blue&#45;&#45;text': sortBy === key }"-->
+            <!--                  >-->
+            <!--                    {{ item[key.toLowerCase()] }}-->
+            <!--                  </v-list-item-content>-->
+            <!--                </v-list-item>-->
+            <!--              </v-list>-->
+            <!--            </v-card>-->
+            <Article v-bind:item="item"></Article>
           </v-col>
         </v-row>
       </template>
@@ -166,12 +166,13 @@
 
 <script>
 import Article from "./Article";
+
 export default {
   name: "Search",
   components: {
     Article
   },
-  data () {
+  data() {
     return {
       itemsPerPageArray: [4, 8, 12],
       search: '',
@@ -183,13 +184,6 @@ export default {
       keys: [
         'Category',
         'Name',
-        'Calories',
-        'Fat',
-        'Carbs',
-        'Protein',
-        'Sodium',
-        'Calcium',
-        'Iron',
       ],
       items: [
         {
@@ -243,21 +237,21 @@ export default {
     }
   },
   computed: {
-    numberOfPages () {
+    numberOfPages() {
       return Math.ceil(this.items.length / this.itemsPerPage)
     },
-    filteredKeys () {
+    filteredKeys() {
       return this.keys.filter(key => key !== 'Name')
     },
   },
   methods: {
-    nextPage () {
+    nextPage() {
       if (this.page + 1 <= this.numberOfPages) this.page += 1
     },
-    formerPage () {
+    formerPage() {
       if (this.page - 1 >= 1) this.page -= 1
     },
-    updateItemsPerPage (number) {
+    updateItemsPerPage(number) {
       this.itemsPerPage = number
     },
   },
