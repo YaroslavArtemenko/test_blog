@@ -41,13 +41,13 @@
     ></v-text-field>
 
     <v-text-field
-        v-model="preview"
+        v-model="previewText"
         :error-messages="previewErrors"
         :counter="300"
         label="Preview"
         required
-        @input="$v.preview.$touch()"
-        @blur="$v.preview.$touch()"
+        @input="$v.previewText.$touch()"
+        @blur="$v.previewText.$touch()"
     ></v-text-field>
 
     <v-text-field
@@ -84,6 +84,9 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required, minLength, maxLength } from 'vuelidate/lib/validators'
+import {CREATE_ARTICLE} from "../store";
+
+import { v4 as uuidv4 } from 'uuid';
 
 export default {
   name: "NewPost",
@@ -93,7 +96,7 @@ export default {
     category: { required, minLength:minLength(3), maxLength:maxLength(15) },
     name: { required, minLength: minLength(3), maxLength: maxLength(15) },
     title: {required, minLength: minLength(3),  maxLength: maxLength(15)},
-    preview: {required, minLength:minLength(10), maxLength: maxLength(300)},
+    previewText: {required, minLength:minLength(10), maxLength: maxLength(300)},
     mainText: {required, minLength:minLength(10), maxLength:maxLength(1000)},
 
     checkbox: {
@@ -107,7 +110,7 @@ export default {
     category: '',
     name: '',
     title: '',
-    preview: '',
+    previewText: '',
     mainText: '',
     select: null,
       // items: [
@@ -153,15 +156,15 @@ export default {
     },
     previewErrors () {
       const errors = []
-      if (!this.$v.preview.$dirty) return errors
-      !this.$v.preview.minLength && errors.push('Preview must be at least 10 characters')
-      !this.$v.preview.maxLength && errors.push('Preview must be at most 300 characters long')
-      !this.$v.preview.required && errors.push('Preview is required')
+      if (!this.$v.previewText.$dirty) return errors
+      !this.$v.previewText.minLength && errors.push('Preview must be at least 10 characters')
+      !this.$v.previewText.maxLength && errors.push('Preview must be at most 300 characters long')
+      !this.$v.previewText.required && errors.push('Preview is required')
       return errors
     },
     mainTextErrors () {
       const errors = []
-      if (!this.$v.preview.$dirty) return errors
+      if (!this.$v.mainText.$dirty) return errors
       !this.$v.mainText.minLength && errors.push('Main text must be at least 10 characters')
       !this.$v.mainText.maxLength && errors.push('Main text must be at most 1000 characters long')
       !this.$v.mainText.required && errors.push('Text is required')
@@ -172,13 +175,23 @@ export default {
   methods: {
     submit () {
       this.$v.$touch()
+      this.$store.commit(CREATE_ARTICLE,         {
+        id: uuidv4(),
+        category: this.category,
+        name: this.name,
+        previewText: this.previewText,
+        author: this.author,
+        date: new Date(),
+        mainText: this.mainText
+      },
+      this.clear());
     },
     clear () {
       this.$v.$reset()
       this.category = ''
       this.name = ''
       this.title = ''
-      this.preview = ''
+      this.previewText = ''
       this.mainText = ''
       this.select = null
       this.checkbox = false

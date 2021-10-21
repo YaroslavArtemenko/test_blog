@@ -11,6 +11,7 @@
           small
           color="cyan"
           style="left:80%"
+          @click = "dialog = true"
       >
         <v-icon dark>
           mdi-pencil
@@ -69,18 +70,24 @@
         </v-card-actions>
       </v-card>
     </v-expand-transition>
+    <EditForm v-bind:dialog="dialog" v-bind:article="item"></EditForm>
   </v-card>
+
 </template>
 
 <script>
 import {mapActions} from "vuex";
 import {DELETE_ARTICLE} from "../store";
+import EditForm from "./EditForm";
+
 
 export default {
   name: "Article",
+  components: {EditForm},
   data: () => ({
     reveal: false,
-    loading: false
+    loading: false,
+    dialog: false
   }),
   methods: {
     remove() {
