@@ -10,15 +10,15 @@
 
     </v-card>
 
-    <v-select
-        v-model="select"
-        :items="items"
-        :error-messages="selectErrors"
+    <v-text-field
+        v-model="category"
+        :error-messages="categoryErrors"
+        :counter="15"
         label="Category"
         required
-        @change="$v.select.$touch()"
-        @blur="$v.select.$touch()"
-    ></v-select>
+        @input="$v.category.$touch()"
+        @blur="$v.category.$touch()"
+    ></v-text-field>
 
     <v-text-field
         v-model="name"
@@ -90,11 +90,12 @@ export default {
   mixins: [validationMixin],
 
   validations: {
+    category: { required, minLength:minLength(3), maxLength:maxLength(15) },
     name: { required, minLength: minLength(3), maxLength: maxLength(15) },
     title: {required, minLength: minLength(3),  maxLength: maxLength(15)},
     preview: {required, minLength:minLength(10), maxLength: maxLength(300)},
     mainText: {required, minLength:minLength(10), maxLength:maxLength(1000)},
-    select: { required },
+
     checkbox: {
       checked (val) {
         return val
@@ -103,6 +104,7 @@ export default {
   },
 
   data: () => ({
+    category: '',
     name: '',
     title: '',
     preview: '',
@@ -116,7 +118,7 @@ export default {
       // ],
     checkbox: false,
   }),
-  props: ['items'],
+  props: ['item'],
 
   computed: {
     checkboxErrors () {
@@ -125,10 +127,12 @@ export default {
       !this.$v.checkbox.checked && errors.push('You must agree to continue!')
       return errors
     },
-    selectErrors () {
+    categoryErrors () {
       const errors = []
-      if (!this.$v.select.$dirty) return errors
-      !this.$v.select.required && errors.push('Item is required')
+      if (!this.$v.category.$dirty) return errors
+      !this.$v.category.minLength && errors.push('Category must be at least 3 characters')
+      !this.$v.category.maxLength && errors.push('Category must be at most 15 characters long')
+      !this.$v.category.required && errors.push('Category is required.')
       return errors
     },
     nameErrors () {
@@ -171,6 +175,7 @@ export default {
     },
     clear () {
       this.$v.$reset()
+      this.category = ''
       this.name = ''
       this.title = ''
       this.preview = ''
