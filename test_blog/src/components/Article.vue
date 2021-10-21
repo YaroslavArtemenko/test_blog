@@ -76,8 +76,18 @@ export default {
   name: "Article",
   data: () => ({
     reveal: false,
+    loading: false
   }),
-  props: ['item']
+  props: ['item'],
+  methods: {
+
+    async remove () {
+      this.loading = true
+      await new Promise(resolve => setTimeout(resolve, 3000))
+      this.loading = false
+
+    },
+  },
 }
 </script>
 
