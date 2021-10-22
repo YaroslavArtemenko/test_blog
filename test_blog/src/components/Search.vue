@@ -78,7 +78,7 @@
 
       <template v-slot:footer>
         <v-row
-            class="mt-2"
+            class="mt-2 footer-class"
             align="center"
             justify="center"
         >
@@ -204,5 +204,7 @@ export default {
 </script>
 
 <style scoped>
-
+.footer-class {
+  padding: 5%;
+}
 </style>
