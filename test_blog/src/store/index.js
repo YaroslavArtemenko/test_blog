@@ -20,7 +20,7 @@ const articles = [
         {
             id: '1',
             category: 'Sport',
-            name: 'Football',
+            title: 'Football',
             previewText: 'Ole Gunnar Solskjaer\'s praise for Cristiano Ronaldo: \'That\'s what he does best\'',
             author: 'Yaroslav Artemenko',
             date: '21.10.2021',
@@ -29,7 +29,7 @@ const articles = [
         {
             id: '2',
             category: 'Meal',
-            name: 'Ice cream sandwich',
+            title: 'Ice cream sandwich',
             previewText: '          calories: 237,\n' +
                 '          fat: 9.0,\n' +
                 '          carbs: 37,\n' +
@@ -44,7 +44,7 @@ const articles = [
         {
             id: '3',
             category: 'Sport',
-            name: 'Soccer',
+            title: 'Soccer',
             previewText: 'BIG DEAL Get £20 risk-free bet on Vitesse vs Tottenham Europa Conference League clash, plus 89/1 Paddy Power prediction special',
             author: 'Hadassah Philip',
             date: '21.10.2021',
@@ -55,7 +55,7 @@ const articles = [
         {
             id: '4',
             category: 'Meal',
-            name: 'Cupcake',
+            title: 'Cupcake',
             previewText: ' Calories: 305,\n' +
                 '          Fat: 3.7,\n' +
                 '          Carbs: 67,\n' +
@@ -69,7 +69,7 @@ const articles = [
         {
             id: '5',
             category: 'Meal',
-            name: 'Gingerbread',
+            title: 'Gingerbread',
             previewText: ' calories: 356,\n' +
                 '          fat: 16.0,\n' +
                 '          carbs: 49,\n' +

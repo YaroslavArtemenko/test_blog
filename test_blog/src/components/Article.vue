@@ -19,7 +19,7 @@
       </v-btn>
       <div>{{ item.category }}</div>
       <p class="text-h4 text--primary">
-        {{ item.name }}
+        {{ item.title }}
       </p>
       <p>{{ item.author }} {{ item.date }}</p>
       <p>Preview</p>

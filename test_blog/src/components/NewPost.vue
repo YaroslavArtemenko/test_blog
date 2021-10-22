@@ -21,13 +21,13 @@
     ></v-text-field>
 
     <v-text-field
-        v-model="name"
-        :error-messages="nameErrors"
-        :counter="15"
-        label="Name"
+        v-model="author"
+        :error-messages="authorErrors"
+        :counter="20"
+        label="Author"
         required
-        @input="$v.name.$touch()"
-        @blur="$v.name.$touch()"
+        @input="$v.author.$touch()"
+        @blur="$v.author.$touch()"
     ></v-text-field>
 
     <v-text-field
@@ -99,7 +99,7 @@ export default {
 
   validations: {
     category: { required, minLength:minLength(3), maxLength:maxLength(15) },
-    name: { required, minLength: minLength(3), maxLength: maxLength(15) },
+    author: { required, minLength: minLength(3), maxLength: maxLength(20) },
     title: {required, minLength: minLength(3),  maxLength: maxLength(15)},
     previewText: {required, minLength:minLength(10), maxLength: maxLength(300)},
     mainText: {required, minLength:minLength(10), maxLength:maxLength(1000)},
@@ -113,7 +113,7 @@ export default {
 
   data: () => ({
     category: '',
-    name: '',
+    author: '',
     title: '',
     previewText: '',
     mainText: '',
@@ -144,12 +144,12 @@ export default {
       !this.$v.category.required && errors.push('Category is required.')
       return errors
     },
-    nameErrors () {
+    authorErrors () {
       const errors = []
-      if (!this.$v.name.$dirty) return errors
-      !this.$v.name.minLength && errors.push('Name must be at least 3 characters')
-      !this.$v.name.maxLength && errors.push('Name must be at most 15 characters long')
-      !this.$v.name.required && errors.push('Name is required.')
+      if (!this.$v.author.$dirty) return errors
+      !this.$v.author.minLength && errors.push('Name must be at least 3 characters')
+      !this.$v.author.maxLength && errors.push('Name must be at most 20 characters long')
+      !this.$v.author.required && errors.push('Name is required.')
       return errors
     },
     titleErrors () {
@@ -184,7 +184,7 @@ export default {
       this.$store.commit(CREATE_ARTICLE,         {
         id: uuidv4(),
         category: this.category,
-        name: this.name,
+        title: this.title,
         previewText: this.previewText,
         author: this.author,
         date: formatted_date,
@@ -194,7 +194,7 @@ export default {
     clear () {
       this.$v.$reset()
       this.category = ''
-      this.name = ''
+      this.author = ''
       this.title = ''
       this.previewText = ''
       this.mainText = ''

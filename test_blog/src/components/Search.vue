@@ -158,10 +158,10 @@ export default {
       sortDesc: false,
       page: 1,
       itemsPerPage: 4,
-      sortBy: 'Name',
+      sortBy: 'title',
       keys: [
         'Category',
-        'Name',
+        'Title',
         'Author',
         'Date'
       ],
@@ -173,7 +173,7 @@ export default {
       return Math.ceil(this.items.length / this.itemsPerPage)
     },
     filteredKeys() {
-      return this.keys.filter(key => key !== 'Name')
+      return this.keys.filter(key => key !== 'Title')
     },
     items() {
       return this.$store.state.articles

@@ -33,13 +33,13 @@
                   md="4"
               >
                 <v-text-field
-                    v-model="name"
-                    :error-messages="nameErrors"
-                    :counter="15"
+                    v-model="author"
+                    :error-messages="authorErrors"
+                    :counter="20"
                     label="Name"
                     required
-                    @input="$v.name.$touch()"
-                    @blur="$v.name.$touch()"
+                    @input="$v.author.$touch()"
+                    @blur="$v.author.$touch()"
                 ></v-text-field>
               </v-col>
               <v-col
@@ -116,7 +116,7 @@ export default {
 
   validations: {
     category: {required, minLength: minLength(3), maxLength: maxLength(15)},
-    name: {required, minLength: minLength(3), maxLength: maxLength(15)},
+    author: {required, minLength: minLength(3), maxLength: maxLength(20)},
     title: {required, minLength: minLength(3), maxLength: maxLength(15)},
     previewText: {required, minLength: minLength(10), maxLength: maxLength(300)},
     mainText: {required, minLength: minLength(10), maxLength: maxLength(1000)},
@@ -125,7 +125,7 @@ export default {
 
   data: () => ({
     category: '',
-    name: '',
+    author: '',
     title: '',
     previewText: '',
     mainText: '',
@@ -140,12 +140,12 @@ export default {
       !this.$v.category.required && errors.push('Category is required.')
       return errors
     },
-    nameErrors () {
+    authorErrors () {
       const errors = []
-      if (!this.$v.name.$dirty) return errors
-      !this.$v.name.minLength && errors.push('Name must be at least 3 characters')
-      !this.$v.name.maxLength && errors.push('Name must be at most 15 characters long')
-      !this.$v.name.required && errors.push('Name is required.')
+      if (!this.$v.author.$dirty) return errors
+      !this.$v.author.minLength && errors.push('Name must be at least 3 characters')
+      !this.$v.author.maxLength && errors.push('Name must be at most 20 characters long')
+      !this.$v.author.required && errors.push('Name is required.')
       return errors
     },
     titleErrors () {
@@ -180,7 +180,7 @@ export default {
       this.$store.commit(UPDATE_ARTICLE, {
          ...this.article,
         category: this.category,
-        name: this.name,
+        title: this.title,
         previewText: this.previewText,
         author: this.author,
         date: new Date(),
@@ -190,7 +190,7 @@ export default {
   },
   mounted() {
     this.category = this.article.category
-    this.name = this.article.name
+    this.author = this.article.author
     this.title = this.article.title
     this.previewText = this.article.previewText
     this.mainText = this.article.mainText
