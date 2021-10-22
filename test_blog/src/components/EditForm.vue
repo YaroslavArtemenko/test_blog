@@ -18,8 +18,13 @@
                   md="4"
               >
                 <v-text-field
-                    label="Legal first name*"
+                    v-model="category"
+                    :error-messages="categoryErrors"
+                    :counter="15"
+                    label="Category"
                     required
+                    @input="$v.category.$touch()"
+                    @blur="$v.category.$touch()"
                 ></v-text-field>
               </v-col>
               <v-col
@@ -28,8 +33,13 @@
                   md="4"
               >
                 <v-text-field
-                    label="Legal middle name"
-                    hint="example of helper text only on focus"
+                    v-model="name"
+                    :error-messages="nameErrors"
+                    :counter="15"
+                    label="Name"
+                    required
+                    @input="$v.name.$touch()"
+                    @blur="$v.name.$touch()"
                 ></v-text-field>
               </v-col>
               <v-col
@@ -38,44 +48,36 @@
                   md="4"
               >
                 <v-text-field
-                    label="Legal last name*"
-                    hint="example of persistent helper text"
-                    persistent-hint
+                    v-model="title"
+                    :error-messages="titleErrors"
+                    :counter="15"
+                    label="Title"
                     required
+                    @input="$v.title.$touch()"
+                    @blur="$v.title.$touch()"
                 ></v-text-field>
               </v-col>
               <v-col cols="12">
                 <v-text-field
-                    label="Email*"
+                    v-model="previewText"
+                    :error-messages="previewErrors"
+                    :counter="300"
+                    label="Preview"
                     required
+                    @input="$v.previewText.$touch()"
+                    @blur="$v.previewText.$touch()"
                 ></v-text-field>
               </v-col>
               <v-col cols="12">
                 <v-text-field
-                    label="Password*"
-                    type="password"
+                    v-model="mainText"
+                    :error-messages="mainTextErrors"
+                    :counter="1000"
+                    label="Main Text"
                     required
+                    @input="$v.mainText.$touch()"
+                    @blur="$v.mainText.$touch()"
                 ></v-text-field>
-              </v-col>
-              <v-col
-                  cols="12"
-                  sm="6"
-              >
-                <v-select
-                    :items="['0-17', '18-29', '30-54', '54+']"
-                    label="Age*"
-                    required
-                ></v-select>
-              </v-col>
-              <v-col
-                  cols="12"
-                  sm="6"
-              >
-                <v-autocomplete
-                    :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
-                    label="Interests"
-                    multiple
-                ></v-autocomplete>
               </v-col>
             </v-row>
           </v-container>
@@ -93,7 +95,7 @@
           <v-btn
               color="blue darken-1"
               text
-              @click="updateArticle"
+              @click="updateArticle; dialog = false"
           >
             Save
           </v-btn>
@@ -105,8 +107,20 @@
 
 <script>
 import {UPDATE_ARTICLE} from "../store";
+import {validationMixin} from 'vuelidate'
+import {required, minLength, maxLength} from 'vuelidate/lib/validators'
+
 export default {
   name: "EditForm",
+  mixins: [validationMixin],
+
+  validations: {
+    category: {required, minLength: minLength(3), maxLength: maxLength(15)},
+    name: {required, minLength: minLength(3), maxLength: maxLength(15)},
+    title: {required, minLength: minLength(3), maxLength: maxLength(15)},
+    previewText: {required, minLength: minLength(10), maxLength: maxLength(300)},
+    mainText: {required, minLength: minLength(10), maxLength: maxLength(1000)},
+  },
   props: ['dialog', 'article'],
   data: () => ({
     category: '',
@@ -115,15 +129,62 @@ export default {
     previewText: '',
     mainText: '',
   }),
+
+  computed: {
+    categoryErrors () {
+      const errors = []
+      if (!this.$v.category.$dirty) return errors
+      !this.$v.category.minLength && errors.push('Category must be at least 3 characters')
+      !this.$v.category.maxLength && errors.push('Category must be at most 15 characters long')
+      !this.$v.category.required && errors.push('Category is required.')
+      return errors
+    },
+    nameErrors () {
+      const errors = []
+      if (!this.$v.name.$dirty) return errors
+      !this.$v.name.minLength && errors.push('Name must be at least 3 characters')
+      !this.$v.name.maxLength && errors.push('Name must be at most 15 characters long')
+      !this.$v.name.required && errors.push('Name is required.')
+      return errors
+    },
+    titleErrors () {
+      const errors = []
+      if (!this.$v.title.$dirty) return errors
+      !this.$v.title.minLength && errors.push('Title must be at least 3 characters')
+      !this.$v.title.maxLength && errors.push('Title must be at most 15 characters long')
+      !this.$v.title.required && errors.push('Title is required.')
+      return errors
+    },
+    previewErrors () {
+      const errors = []
+      if (!this.$v.previewText.$dirty) return errors
+      !this.$v.previewText.minLength && errors.push('Preview must be at least 10 characters')
+      !this.$v.previewText.maxLength && errors.push('Preview must be at most 300 characters long')
+      !this.$v.previewText.required && errors.push('Preview is required')
+      return errors
+    },
+    mainTextErrors () {
+      const errors = []
+      if (!this.$v.mainText.$dirty) return errors
+      !this.$v.mainText.minLength && errors.push('Main text must be at least 10 characters')
+      !this.$v.mainText.maxLength && errors.push('Main text must be at most 1000 characters long')
+      !this.$v.mainText.required && errors.push('Text is required')
+      return errors
+    },
+  },
+
   methods: {
     updateArticle() {
-      this.$store.commit(UPDATE_ARTICLE, {...this.props.article,
+      this.$v.$touch()
+      this.$store.commit(UPDATE_ARTICLE, {
+         ...this.props.article,
         category: this.category,
         name: this.name,
         previewText: this.previewText,
         author: this.author,
         date: new Date(),
-        mainText: this.mainText})
+        mainText: this.mainText
+      })
     }
   },
 }
