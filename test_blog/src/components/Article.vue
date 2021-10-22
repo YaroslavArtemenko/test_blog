@@ -70,7 +70,7 @@
         </v-card-actions>
       </v-card>
     </v-expand-transition>
-    <EditForm v-bind:dialog="dialog"></EditForm>
+    <EditForm v-bind:dialog="dialog" v-bind:article="item"></EditForm>
   </v-card>
 
 </template>

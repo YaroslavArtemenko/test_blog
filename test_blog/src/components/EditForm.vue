@@ -7,7 +7,7 @@
     >
       <v-card>
         <v-card-title>
-          <span class="text-h5">User Profile</span>
+          <span class="text-h5">Editing</span>
         </v-card-title>
         <v-card-text>
           <v-container>
@@ -81,7 +81,7 @@
               </v-col>
             </v-row>
           </v-container>
-          <small>*indicates required field</small>
+
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -95,7 +95,7 @@
           <v-btn
               color="blue darken-1"
               text
-              @click="updateArticle; dialog = false"
+              @click="updateArticle(); dialog = false"
           >
             Save
           </v-btn>
@@ -122,6 +122,7 @@ export default {
     mainText: {required, minLength: minLength(10), maxLength: maxLength(1000)},
   },
   props: ['dialog', 'article'],
+
   data: () => ({
     category: '',
     name: '',
@@ -177,7 +178,7 @@ export default {
     updateArticle() {
       this.$v.$touch()
       this.$store.commit(UPDATE_ARTICLE, {
-         ...this.props.article,
+         ...this.article,
         category: this.category,
         name: this.name,
         previewText: this.previewText,
@@ -187,6 +188,14 @@ export default {
       })
     }
   },
+  mounted() {
+    this.category = this.article.category
+    this.name = this.article.name
+    this.title = this.article.title
+    this.previewText = this.article.previewText
+    this.mainText = this.article.mainText
+
+  }
 }
 </script>
 

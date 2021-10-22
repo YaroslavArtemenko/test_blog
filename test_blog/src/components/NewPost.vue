@@ -125,6 +125,7 @@ export default {
       //   'Item 4',
       // ],
     checkbox: false,
+
   }),
   props: ['item'],
 
@@ -188,8 +189,7 @@ export default {
         author: this.author,
         date: formatted_date,
         mainText: this.mainText
-      },
-      this.clear());
+      })
     },
     clear () {
       this.$v.$reset()
@@ -198,7 +198,6 @@ export default {
       this.title = ''
       this.previewText = ''
       this.mainText = ''
-      this.select = null
       this.checkbox = false
     },
   },

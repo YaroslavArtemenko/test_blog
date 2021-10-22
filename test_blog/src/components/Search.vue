@@ -165,7 +165,7 @@ export default {
         'Author',
         'Date'
       ],
-      items: this.$store.state.articles
+
     }
   },
   computed: {
@@ -174,6 +174,9 @@ export default {
     },
     filteredKeys() {
       return this.keys.filter(key => key !== 'Name')
+    },
+    items() {
+      return this.$store.state.articles
     },
     ...mapGetters([
       ARTICLES
