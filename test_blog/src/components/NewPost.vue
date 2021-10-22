@@ -88,6 +88,11 @@ import {CREATE_ARTICLE} from "../store";
 
 import { v4 as uuidv4 } from 'uuid';
 
+
+let current_datetime = new Date()
+let formatted_date = current_datetime.getDate() + "." + (current_datetime.getMonth() + 1) + "." + current_datetime.getFullYear() + '  ' + current_datetime.getHours() + ':' + current_datetime.getMinutes()
+
+
 export default {
   name: "NewPost",
   mixins: [validationMixin],
@@ -181,7 +186,7 @@ export default {
         name: this.name,
         previewText: this.previewText,
         author: this.author,
-        date: new Date(),
+        date: formatted_date,
         mainText: this.mainText
       },
       this.clear());
