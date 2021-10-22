@@ -110,6 +110,9 @@ import {UPDATE_ARTICLE} from "../store";
 import {validationMixin} from 'vuelidate'
 import {required, minLength, maxLength} from 'vuelidate/lib/validators'
 
+let current_datetime = new Date()
+let formatted_date = current_datetime.getDate() + "." + (current_datetime.getMonth() + 1) + "." + current_datetime.getFullYear() + '  ' + current_datetime.getHours() + ':' + current_datetime.getMinutes()
+
 export default {
   name: "EditForm",
   mixins: [validationMixin],
@@ -183,7 +186,7 @@ export default {
         title: this.title,
         previewText: this.previewText,
         author: this.author,
-        date: new Date(),
+        date: formatted_date,
         mainText: this.mainText
       })
     }
