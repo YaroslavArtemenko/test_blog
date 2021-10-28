@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-main>
+    <v-main style="background-color: rgba(255,255,255,0.69)">
       <Header/>
       <Search></Search>
       <NewPost></NewPost>
